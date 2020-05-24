@@ -42,11 +42,15 @@ void simpleHighway(pcl::visualization::PCLVisualizer::Ptr& viewer)
     // ----------------------------------------------------
     
     // RENDER OPTIONS
-    bool renderScene = true;
+    bool renderScene = false;
     std::vector<Car> cars = initHighway(renderScene, viewer);
     
-    // TODO:: Create lidar sensor 
-
+    // TODO:: Create lidar sensor
+     Lidar* lidar = new Lidar(cars,0);
+    
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = lidar->scan();
+    // renderRays(viewer, lidar->position, cloud);
+    renderPointCloud(viewer, cloud, "pc"  );
     // TODO:: Create point processor
   
 }
@@ -80,6 +84,7 @@ int main (int argc, char** argv)
 {
     std::cout << "starting enviroment" << std::endl;
 
+    // This is pcl simulation environment you can add different things in this environment 
     pcl::visualization::PCLVisualizer::Ptr viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
     CameraAngle setAngle = XY;
     initCamera(setAngle, viewer);
